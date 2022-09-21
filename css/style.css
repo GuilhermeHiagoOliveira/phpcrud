@@ -1,0 +1,39 @@
+:root {
+    --color1: #1acddc;
+    --color2: #12bfd0;
+}
+
+* {
+    font-family: Poppins;
+    /* overflow: hidden; */
+}
+
+body > main, #loader {
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+body > main {
+    background-color: var(--color1);
+    position: relative;
+}
+
+#loader {
+    /* z-index: 99999; */
+    top: 1px;
+    left: 1px;
+    position: absolute;
+    visibility: hidden;
+}
+
+#createUserModal > div > div, body > main > div {
+    min-width: 50% !important;
+}
+
+#number, #uf {
+    max-width: 20% !important;
+}
+
+body > main > div > table > tbody {
+    font-size: 0.9rem !important;
+}

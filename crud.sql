@@ -1,0 +1,21 @@
+CREATE TABLE `users` (
+    `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    -- `idUsuario` bigint(20) NOT NULL,
+    `DataHoraCadastro` datetime NOT NULL,
+    `Codigo` varchar(15) NOT NULL,
+    `Nome` varchar(150) NOT NULL,
+    `CPF_CNPJ` varchar(20) NOT NULL,
+    `CEP` integer(8) NOT NULL,
+    `Logradouro` varchar(100) NOT NULL,
+    -- `Endereco` varchar(120) NOT NULL,
+    `Numero` varchar(20) NOT NULL,
+    `Bairro` varchar(50) NOT NULL,
+    `Cidade` varchar(60) NOT NULL,
+    `UF` varchar(02) NOT NULL,
+    `Complemento` varchar(150),
+    `Fone` varchar(15) NOT NULL,
+    `LimiteCredito` float(30),
+    `Validade` date,
+    PRIMARY KEY (`ID`),
+    UNIQUE KEY (`Codigo`, `CPF_CNPJ`, `Fone`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
