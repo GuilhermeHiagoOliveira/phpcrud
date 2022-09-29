@@ -1,5 +1,4 @@
 <?php
-include_once "./functions.php";
 include_once "./db.php";
 ?>
 <!DOCTYPE html>
@@ -45,14 +44,18 @@ include_once "./db.php";
             </div>
 
             <?php
-            $func = new Functions();
-            if (isset($_POST['submit']) && $_POST['search'] != "") {
+            if (isset($_POST['submit'])) {
                 //  Codigo, Nome, Cidade, CEP
-                $result = $func->search();
+                $search = $_POST['search'];
+                $query = "SELECT * FROM users WHERE Codigo = '". $search . "' OR Nome LIKE '%" . $search . "%' OR Cidade LIKE '%" . $search . "%' OR CEP = '%" . $search . "%'";
+                $users = $conn->prepare($query);
+                $users->execute();
             } else {
-                $result = $func->select();
+                $query = "SELECT * FROM users";
+                $users = $conn->prepare($query);
+                $users->execute();
             }
-            if ($result) {
+            if ($users and $users->rowCount() != 0) {
             ?>
                 <table class="table table-striped">
 
@@ -67,7 +70,7 @@ include_once "./db.php";
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($result as $row) {
+                        while ($row = $users->fetch(PDO::FETCH_ASSOC)) {
                         ?>
                             <tr>
                                 <th scope="row"><span class="d-flex"><?= $row['ID']; ?></span></th>

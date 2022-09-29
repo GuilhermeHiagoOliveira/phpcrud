@@ -165,29 +165,27 @@ $("#edit-cep").blur(function () {
 
 function handleForm() {
     $.ajax({
-        url: 'http://localhost/quality/api/functions/create.php',
-        type: 'get',
+        url: 'functions.php',
+        type: 'post',
         data: {
-            nome: $('#name').val(),
+            function: "storeUser",
+            name: $('#name').val(),
             cpfcnpj: $('#cpfcnpj').val(),
             cep: $('#cep').val(),
-            logradouro: $('#street').val(),
-            numero: $('#number').val(),
-            bairro: $('#district').val(),
-            cidade: $('#city').val(),
+            street: $('#street').val(),
+            number: $('#number').val(),
+            district: $('#district').val(),
+            city: $('#city').val(),
             uf: $('#uf').val(),
-            complemento: $('#complement').val(),
-            fone: $('#phone').val()
+            complement: $('#complement').val(),
+            phone: $('#phone').val()
         },
-        success: function (response) {
-            console.log(response);
+        success: function () {
             alert('Cadastrado com sucesso!');
             window.location.reload();
             return true;
         },
-        error: function (xhr, ajaxOptions, throwError) {
-            console.log(xhr.status);
-            console.log(throwError);
+        error: function (request, status, error) {
             alert('error');
             return false;
         }
@@ -196,9 +194,10 @@ function handleForm() {
 
 function deleteUser(id) {
     $.ajax({
-        url: 'http://localhost/quality/api/functions/delete.php',
-        type: 'get',
+        url: 'functions.php',
+        type: 'post',
         data: {
+            function: "deleteUser",
             id: id
         },
         success: function () {
@@ -211,12 +210,15 @@ function deleteUser(id) {
 
 function editUser(id) {
     $.ajax({
-        url: 'http://localhost/quality/api/functions/single_select.php',
-        type: 'get',
+        url: 'functions.php',
+        type: 'post',
         data: {
+            function: "findUser",
             id: id
         },
         success: function (data) {
+            data = JSON.parse(data);
+            console.log(data['Nome']);
             $('#edit-id').val(data['ID']);
             $('#edit-name').val(data['Nome']);
             $('#edit-cpfcnpj').val(data['CPF_CNPJ']);
@@ -230,19 +232,16 @@ function editUser(id) {
             $('#edit-phone').val(data['Fone']);
             $('#edit-validity').val(data['Validade']);
             $('#edit-creditlimit').val(data['LimiteCredito']);
-        },
-        error: function (xhr, ajaxOptions, throwError){
-            console.log(xhr.status);
-            console.log(throwError);
         }
     });
 }
 
 function handleEditForm() {
     $.ajax({
-        url: 'http://localhost/quality/api/functions/update.php',
-        type: 'get',
+        url: 'functions.php',
+        type: 'post',
         data: {
+            function: "editUser",
             id: $('#edit-id').val(),
             name: $('#edit-name').val(),
             cpfcnpj: $('#edit-cpfcnpj').val(),
@@ -257,14 +256,12 @@ function handleEditForm() {
             validity: $('#edit-validity').val(),
             creditlimit: $('#edit-creditlimit').val()
         },
-        success: function (response) {
+        success: function () {
             alert('Usuário atualizado com sucesso!');
             window.location.reload();
             return true;
         },
-        error: function (xhr, ajaxOptions, throwError) {
-            console.log(xhr.status);
-            console.log(throwError);
+        error: function (request, status, error) {
             alert('error');
             return false;
         }
